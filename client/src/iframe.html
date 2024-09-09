@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview</title>
+</head>
+
+<body>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import React from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const App = () => {
+      return React.createElement('div', null, 'aaa')
+    }
+
+    window.addEventListener('load', () => {
+      const root = document.getElementById('root');
+      ReactDOM.createRoot(root).render(React.createElement(App, null))
+    })
+
+  </script>
+
+  <div id="root">
+    <div>
+      Loading...
+    </div>
+  </div>
+
+</body>
+
+</html>

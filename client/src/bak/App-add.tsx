@@ -1,7 +1,5 @@
 import { transform } from "@babel/standalone";
-import { Editor } from "@monaco-editor/react";
-import { useState } from "react";
-import iframeRaw from "./iframe.html?raw";
+import { useRef } from "react";
 
 function App() {
   const addCode = `
@@ -16,21 +14,17 @@ import { add } from './add';
 console.log(add(1, 2));  
 `;
 
-  const [editorCode, setEditorCode] = useState(callAddCode);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   const addCodeUrl = URL.createObjectURL(
     new Blob([addCode], { type: "application/javascript" })
   );
 
-  const iframeUrl = URL.createObjectURL(
-    new Blob([iframeRaw], { type: "text/html" })
-  );
-
   function onClick() {
-    if (!editorCode) {
+    if (!ref.current) {
       return;
     }
-    const res = transform(editorCode, {
+    const res = transform(callAddCode, {
       presets: ["react", "typescript"],
       filename: "App.tsx",
       plugins: [
@@ -48,20 +42,11 @@ console.log(add(1, 2));
 
   return (
     <div>
-      <Editor
-        height={500}
-        defaultLanguage="javascript"
-        value={editorCode}
-        onChange={(v) => setEditorCode(v!)}
-      />
-      <iframe
-        src={iframeUrl}
-        style={{
-          width: "500px",
-          height: "500px",
-          padding: 0,
-        }}
-      />
+      <textarea
+        ref={ref}
+        style={{ width: "500px", height: "300px" }}
+        defaultValue={callAddCode}
+      ></textarea>
       <button onClick={onClick}>编译</button>
     </div>
   );
