@@ -34,7 +34,7 @@ export default (props: FileNameListProps) => {
   }
 
   function onAdd() {
-    addFile(`Com${Math.random().toString().slice(2, 8)}.tsx`);
+    addFile(`Com${Math.random().toString().slice(2, 6)}.tsx`);
     setCreating(true);
   }
 
