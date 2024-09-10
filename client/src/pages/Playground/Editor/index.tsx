@@ -6,13 +6,10 @@ import {
 // import styles from "./index.module.less";
 import { createAta } from "./ata";
 import { editor } from "monaco-editor";
+import { PlaygroundFile } from "../../../context/PlaygroundContext";
 
 export interface EditorProps {
-  file: {
-    name: string;
-    value: string;
-    language: string;
-  };
+  file: PlaygroundFile;
   onChange?: MonacoEditorProps["onChange"];
   options?: editor.IStandaloneEditorConstructionOptions;
 }
