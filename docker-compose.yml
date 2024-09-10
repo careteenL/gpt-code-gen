@@ -10,32 +10,32 @@ services:
       - "8700:80"
     restart: always
     networks:
-      - common-network
+      - gpt-network
   gpt-server-app:
     build:
       context: ./server
       dockerfile: ./Dockerfile
     depends_on:
-      - mysql-container
+      - gpt-mysql
     ports:
       - "8701:8701"
     restart: always
     networks:
-      - common-network
+      - gpt-network
     env_file:
       - server/src/.env
-  mysql-container:
+  gpt-mysql:
     image: mysql
     volumes:
-      - /tmp/nest-mysql:/var/lib/mysql
+      - /tmp/gpt-mysql:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
       MYSQL_DATABASE: gpt-code-gen
       MYSQL_ROOT_PASSWORD: careteen
     restart: always
     networks:
-      - common-network
+      - gpt-network
 networks:
-  common-network:
+  gpt-network:
     driver: bridge
