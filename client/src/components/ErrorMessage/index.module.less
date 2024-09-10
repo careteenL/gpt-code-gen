@@ -1,0 +1,51 @@
+.message {
+  &.warn {
+    --text-color: #e6a23c;
+    --bg-color: #fdf6ec;
+  }
+  &.error {
+    --text-color: #f56c6c;
+    --bg-color: #fef0f0;
+  }
+  position: absolute;
+  right: 8px;
+  top: 10px;
+  left: 8px;
+  z-index: 10;
+  display: flex;
+  max-height: calc(100% - 300px);
+  min-height: 40px;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 2px solid #fff;
+  border-radius: 6px;
+  border-color: var(--text-color);
+
+  pre {
+    padding: 12px 20px;
+    margin: 0;
+    overflow: auto;
+    white-space: break-spaces;
+  }
+
+  .dismiss {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+
+    display: block;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+
+    font-size: 18px;
+    line-height: 18px;
+    color: var(--bg-color);
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--text-color);
+    border: none;
+    border-radius: 9px;
+  }
+}
