@@ -15,7 +15,14 @@ export default () => {
   const [inputValue, setInputValue] = useState("");
 
   const file = files[APP_TSX];
-  console.log("files: ", files);
+
+  const {
+    loading: getHistoryLoading,
+    runAsync: getHistoryListRequest,
+    data: historyData,
+  } = useRequest(getHistoryList, {
+    manual: true,
+  });
 
   const { runAsync: postGptGenerateRequest } = useRequest(postGptGenerate, {
     manual: true,
@@ -30,16 +37,10 @@ export default () => {
             value: data ?? "",
           },
         });
+        // 刷新历史记录
+        getHistoryListRequest();
       }
     },
-  });
-
-  const {
-    loading: getHistoryLoading,
-    runAsync: getHistoryListRequest,
-    data: historyData,
-  } = useRequest(getHistoryList, {
-    manual: true,
   });
 
   const { runAsync: getHistoryRequest } = useRequest(getHistory, {
