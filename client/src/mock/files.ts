@@ -11,6 +11,9 @@ export const APP_CSS = 'App.css'
 export const MAIN_TSX = 'main.tsx'
 export const IMPORT_MAP_JSON = 'import-map.json'
 
+// 不能改名和删除的文件
+export const readonlyFilenames = [MAIN_TSX, IMPORT_MAP_JSON, APP_TSX]
+
 /**
  * 默认的 create-vite 项目模板代码
  */

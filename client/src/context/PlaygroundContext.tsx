@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useState } from "react";
 import { filename2Language } from "../utils";
+import { message } from "antd";
 
 export interface PlaygroundFile {
   /**
@@ -55,9 +56,9 @@ export interface PlaygroundContextState {
    * 更新文件名
    * @param oldFilename
    * @param newFilename
-   * @returns
+   * @returns true 修改成功 false 修改失败
    */
-  updateFilename: (oldFilename: string, newFilename: string) => void;
+  updateFilename: (oldFilename: string, newFilename: string) => boolean;
 }
 
 export const PlaygroundContext = createContext<PlaygroundContextState>({});
@@ -99,16 +100,25 @@ export const PlaygroundProvider = (props: PlaygroundProviderProps) => {
     oldFilename,
     newFilename
   ) => {
-    if (!files[oldFilename] || !newFilename) return;
-    const { [oldFilename]: value, ...restFiles } = files;
+    if (!files[oldFilename] || !newFilename) return false;
+    const { [oldFilename]: oldFilenameValue, ...restFiles } = files;
+    const otherKeys = Object.keys(files).filter((key) => key !== oldFilename);
+    if (otherKeys.includes(newFilename)) {
+      message.error(`文件${newFilename}已存在，请重新命名`);
+      setFiles({
+        ...files,
+      });
+      return false;
+    }
     setFiles({
       ...restFiles,
       [newFilename]: {
-        ...value,
+        ...oldFilenameValue,
         name: newFilename,
         language: filename2Language(newFilename),
       },
     });
+    return true;
   };
 
   return (
