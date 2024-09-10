@@ -1,4 +1,7 @@
 import { strFromU8, strToU8, unzlibSync, zlibSync } from "fflate"
+import { PlaygroundFiles } from "../context/PlaygroundContext"
+import JSZip from "jszip"
+import { saveAs } from "file-saver"
 
 /**
  * 根据文件名得到文件类型
@@ -45,4 +48,18 @@ export function uncompress(base64: string) {
   const buffer = strToU8(binary, true)
   const unzipped = unzlibSync(buffer)
   return strFromU8(unzipped)
+}
+
+/**
+ * 下载文件成 zip
+ * @param files 
+ */
+export async function downloadFiles(files: PlaygroundFiles) {
+  const zip = new JSZip()
+  Object.keys(files).forEach(filename => {
+    zip.file(filename, files[filename].value)
+  })
+
+  const blob = await zip.generateAsync({ type: 'blob' })
+  saveAs(blob, `GPT_Code_${Date.now()}.zip`)
 }
