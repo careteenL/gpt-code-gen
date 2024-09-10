@@ -11,8 +11,6 @@ export interface CodeEditorProps {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default (props: CodeEditorProps) => {
-  console.log("props: ", props);
-
   const { files, selectedFilename, setFiles } = useContext(PlaygroundContext);
 
   const file = files[selectedFilename];
