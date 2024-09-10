@@ -1,5 +1,5 @@
-import { createContext, PropsWithChildren, useState } from "react";
-import { filename2Language } from "../utils";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { compress, filename2Language, uncompress } from "../utils";
 import { message } from "antd";
 
 export interface PlaygroundFile {
@@ -74,11 +74,25 @@ export const PlaygroundProvider = (props: PlaygroundProviderProps) => {
     selectedFilename: defaultSelectedFilename,
     files: defaultFiles,
   } = props;
+
   const [selectedFilename, setSelectedFilename] = useState(
     defaultSelectedFilename
   );
-  const [files, setFiles] =
-    useState<PlaygroundContextState["files"]>(defaultFiles);
+
+  function initFilesFromHash() {
+    try {
+      const hash = uncompress(window.location.hash.slice(1));
+      return JSON.parse(hash);
+    } catch (error) {
+      console.log("error: ", error);
+      return undefined;
+    }
+  }
+
+  // 将文件内容和 hash 关联
+  const [files, setFiles] = useState<PlaygroundContextState["files"]>(
+    initFilesFromHash() || defaultFiles
+  );
   const addFile: PlaygroundContextState["addFile"] = (filename) => {
     setFiles({
       ...files,
@@ -120,6 +134,15 @@ export const PlaygroundProvider = (props: PlaygroundProviderProps) => {
     });
     return true;
   };
+
+  function initialize() {
+    const hash = compress(JSON.stringify(files));
+    window.location.hash = hash;
+  }
+
+  useEffect(() => {
+    initialize();
+  }, [files]);
 
   return (
     <PlaygroundContext.Provider
