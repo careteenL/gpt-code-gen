@@ -1,0 +1,41 @@
+# version: '3.8'
+services:
+  gpt-fe-app:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    depends_on:
+      - gpt-server-app
+    ports:
+      - "8700:80"
+    restart: always
+    networks:
+      - common-network
+  gpt-server-app:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mysql-container
+    ports:
+      - "8701:8701"
+    restart: always
+    networks:
+      - common-network
+    env_file:
+      - server/src/.env
+  mysql-container:
+    image: mysql
+    volumes:
+      - /tmp/nest-mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: gpt-code-gen
+      MYSQL_ROOT_PASSWORD: careteen
+    restart: always
+    networks:
+      - common-network
+networks:
+  common-network:
+    driver: bridge

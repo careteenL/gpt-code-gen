@@ -17,25 +17,22 @@ export default () => {
   const file = files[APP_TSX];
   console.log("files: ", files);
 
-  const { loading, runAsync: postGptGenerateRequest } = useRequest(
-    postGptGenerate,
-    {
-      manual: true,
-      onSuccess(res) {
-        console.log("res: ", res);
-        const { code, data } = res.data;
-        if (code === 200 || code === 201) {
-          setFiles({
-            ...files,
-            [APP_TSX]: {
-              ...file,
-              value: data ?? "",
-            },
-          });
-        }
-      },
-    }
-  );
+  const { runAsync: postGptGenerateRequest } = useRequest(postGptGenerate, {
+    manual: true,
+    onSuccess(res) {
+      console.log("res: ", res);
+      const { code, data } = res.data;
+      if (code === 200 || code === 201) {
+        setFiles({
+          ...files,
+          [APP_TSX]: {
+            ...file,
+            value: data ?? "",
+          },
+        });
+      }
+    },
+  });
 
   const {
     loading: getHistoryLoading,

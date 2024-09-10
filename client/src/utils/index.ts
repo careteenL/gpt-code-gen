@@ -4,6 +4,14 @@ import JSZip from "jszip"
 import { saveAs } from "file-saver"
 import { SelectProps } from "antd"
 
+
+/**
+ * 服务端地址
+ * 本地开发 http://localhost:8701
+ * 部署到服务器 /api 
+ */
+export const SERVER_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8701' : '/api'
+
 /**
  * 根据文件名得到文件类型
  * @param filename 

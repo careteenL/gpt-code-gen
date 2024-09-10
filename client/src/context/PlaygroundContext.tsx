@@ -61,7 +61,9 @@ export interface PlaygroundContextState {
   updateFilename: (oldFilename: string, newFilename: string) => boolean;
 }
 
-export const PlaygroundContext = createContext<PlaygroundContextState>({});
+export const PlaygroundContext = createContext<PlaygroundContextState>(
+  {} as any
+);
 
 export interface PlaygroundProviderProps extends PropsWithChildren {
   selectedFilename: string;

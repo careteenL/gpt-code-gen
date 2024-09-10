@@ -1,4 +1,4 @@
-import { Avatar, List, ListProps, Spin } from "antd";
+import { Avatar, List, ListProps } from "antd";
 import styles from "./index.module.less";
 
 export interface HistoryProps {
@@ -9,7 +9,7 @@ export interface HistoryProps {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default (props: HistoryProps) => {
-  const { loading, dataSource, onClickItem } = props;
+  const { dataSource, onClickItem } = props;
 
   function onClickItemInner(item: any) {
     console.log("item: ", item);

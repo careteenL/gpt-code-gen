@@ -21,7 +21,7 @@ interface MessageData {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default (props: PreviewProps) => {
+export default () => {
   const { files } = useContext(PlaygroundContext);
 
   const [compiledCode, setCompiledCode] = useState("");

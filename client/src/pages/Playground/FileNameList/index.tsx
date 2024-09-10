@@ -9,7 +9,7 @@ export interface FileNameListProps {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default (props: FileNameListProps) => {
+export default () => {
   const {
     files,
     setSelectedFilename,
