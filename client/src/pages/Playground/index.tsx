@@ -1,7 +1,6 @@
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import styles from "./index.module.less";
-import Header from "./Header";
 import CodeEditor from "./CodeEditor";
 import Preview from "./Preview";
 import FileNameList from "./FileNameList";
@@ -10,7 +9,6 @@ import FileNameList from "./FileNameList";
 export default () => {
   return (
     <div className={styles.wrapper}>
-      <Header />
       <Allotment defaultSizes={[20, 100, 100]}>
         <Allotment.Pane minSize={80}>
           <FileNameList />

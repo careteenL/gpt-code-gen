@@ -5,6 +5,7 @@ import { message } from "antd";
 import { useContext } from "react";
 import { PlaygroundContext } from "../../../context/PlaygroundContext";
 import { downloadFiles } from "../../../utils";
+import logo from "../../../assets/32.png";
 
 export interface HeaderProps {
   name?: string;
@@ -12,7 +13,7 @@ export interface HeaderProps {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default (props: HeaderProps) => {
-  const { name = "Playground" } = props;
+  const { name = "GPT" } = props;
 
   const { files } = useContext(PlaygroundContext);
 
@@ -26,10 +27,14 @@ export default (props: HeaderProps) => {
     message.success("下载成功");
   }
 
+  function onLogo() {
+    window.open("http://careteen.cn", "__blank");
+  }
+
   return (
     <div className={styles.header}>
-      <div>
-        <div className={styles.logo}></div>
+      <div className={styles.nameWrapper}>
+        <img src={logo} className={styles.logo} onClick={onLogo}></img>
         <div className={styles.name}>{name}</div>
       </div>
       <div className={styles.utils}>

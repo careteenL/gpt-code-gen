@@ -2,6 +2,7 @@ import { strFromU8, strToU8, unzlibSync, zlibSync } from "fflate"
 import { PlaygroundFiles } from "../context/PlaygroundContext"
 import JSZip from "jszip"
 import { saveAs } from "file-saver"
+import { SelectProps } from "antd"
 
 /**
  * 根据文件名得到文件类型
@@ -63,3 +64,27 @@ export async function downloadFiles(files: PlaygroundFiles) {
   const blob = await zip.generateAsync({ type: 'blob' })
   saveAs(blob, `GPT_Code_${Date.now()}.zip`)
 }
+
+
+/**
+ * gpt 模式类型
+ */
+export const modelOptions: SelectProps['options'] = [
+  {
+    value: 'gpt-4',
+    label: 'GPT-4'
+  },
+  {
+    value: 'gpt-4o',
+    label: 'GPT-40'
+  },
+  {
+    value: 'gemini-pro',
+    label: 'Gemini Pro'
+  },
+]
+
+/**
+ * 配置
+ */
+export const STORAGE_CONFIG = 'STORAGE_CONFIG'

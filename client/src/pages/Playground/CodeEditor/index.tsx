@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Editor, { EditorProps } from "../Editor";
-import FileNameList from "../FileNameList";
+// import FileNameList from "../FileNameList";
 import styles from "./index.module.less";
 import { PlaygroundContext } from "../../../context/PlaygroundContext";
 import { debounce } from "lodash-es";
