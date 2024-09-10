@@ -4,13 +4,17 @@ import styles from "./index.module.less";
 import Header from "./Header";
 import CodeEditor from "./CodeEditor";
 import Preview from "./Preview";
+import FileNameList from "./FileNameList";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default () => {
   return (
     <div className={styles.wrapper}>
       <Header />
-      <Allotment defaultSizes={[100, 100]}>
+      <Allotment defaultSizes={[20, 100, 100]}>
+        <Allotment.Pane minSize={80}>
+          <FileNameList />
+        </Allotment.Pane>
         <Allotment.Pane minSize={500}>
           <CodeEditor />
         </Allotment.Pane>

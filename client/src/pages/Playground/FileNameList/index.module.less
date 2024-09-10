@@ -1,12 +1,15 @@
 .filenameList {
   display: flex;
-  align-items: center;
-  height: 38px;
+  flex-direction: column;
+  // align-items: center;
+  // height: 38px;
+  min-width: 100px;
   overflow-x: auto;
   overflow-y: hidden;
   border-bottom: 1px solid #ddd;
   box-sizing: border-box;
-  color: #444;
+  color: #000;
+  font-weight: bold;
   background-color: #fff;
 
   &::-webkit-scrollbar {
@@ -23,5 +26,6 @@
   .add {
     cursor: pointer;
     color: #000;
+    text-align: center;
   }
 }

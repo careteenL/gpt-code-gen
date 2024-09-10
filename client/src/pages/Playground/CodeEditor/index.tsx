@@ -26,7 +26,7 @@ export default (props: CodeEditorProps) => {
   };
   return (
     <div className={styles.editor}>
-      <FileNameList />
+      {/* <FileNameList /> */}
       <Editor file={file} onChange={debounce(onChange, 500)} />
     </div>
   );
