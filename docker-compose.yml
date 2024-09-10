@@ -29,7 +29,7 @@ services:
     volumes:
       - /tmp/gpt-mysql:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "8702:3306"
     environment:
       MYSQL_DATABASE: gpt-code-gen
       MYSQL_ROOT_PASSWORD: careteen
