@@ -34,7 +34,7 @@ export class AppController {
       max_tokens: 4096,
     };
     // TODO mock
-    return await this.appService.getHistory(1)
+    // return await this.appService.getHistory(1)
     return await this.appService.generateCode(
       baseUrl,
       apiKey,
