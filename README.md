@@ -13,6 +13,8 @@
 
 ![gpt-preview](https://careteenl.github.io/images/project/gpt/gpt-preview.png)
 
+- 可前往 https://github.com/chatanywhere/GPT_API_free 获取免费额度的 apikey
+
 ## 技术难点
 
 - 后端使用 nestjs 开发项目 、 typeorm mysql 存储数据、jwt 鉴权

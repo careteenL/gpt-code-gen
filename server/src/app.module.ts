@@ -12,7 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     HttpModule.register({
-      // timeout: 10000
+      timeout: 100000
     }),
     ConfigModule.forRoot({
       isGlobal: true,
