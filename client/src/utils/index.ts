@@ -96,3 +96,4 @@ export const modelOptions: SelectProps['options'] = [
  * 配置
  */
 export const STORAGE_CONFIG = 'STORAGE_CONFIG'
+export const STORAGE_ACCESS_TOKEN = 'STORAGE_ACCESS_TOKEN'

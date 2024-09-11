@@ -8,7 +8,8 @@ import { useRequest } from "ahooks";
 import { getHistory, getHistoryList, postGptGenerate } from "../../../services";
 import { PlaygroundContext } from "../../../context/PlaygroundContext";
 import { APP_TSX } from "../../../mock/files";
-import { STORAGE_CONFIG } from "../../../utils";
+import { STORAGE_ACCESS_TOKEN, STORAGE_CONFIG } from "../../../utils";
+import Login from "../Login";
 
 const DEFAULT_TIP =
   "请耐心等候编译，也可以编辑文件内容触发重新编译，再查看显示效果";
@@ -17,6 +18,8 @@ const DEFAULT_TIP =
 export default () => {
   const { setFiles, files } = useContext(PlaygroundContext);
   const [inputValue, setInputValue] = useState("");
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const file = files[APP_TSX];
 
@@ -34,7 +37,7 @@ export default () => {
       manual: true,
       onSuccess(res) {
         console.log("res: ", res);
-        const { code, data } = res.data;
+        const { code, data } = res?.data || {};
         if (code === 200 || code === 201) {
           setFiles({
             ...files,
@@ -48,7 +51,13 @@ export default () => {
           // 清空输入项
           setInputValue("");
           message.info(DEFAULT_TIP);
+        } else {
+          message.error("生成失败。请稍后重试");
         }
+      },
+      onError(e) {
+        console.log("e: ", e);
+        message.error("生成失败。请稍后重试");
       },
     }
   );
@@ -91,6 +100,15 @@ export default () => {
     {
       key: "history",
       label: "历史记录",
+      extra: !isLogin ? (
+        <Button type="primary" onClick={onLoginModal}>
+          登录查看完成记录
+        </Button>
+      ) : (
+        <Button type="default" onClick={onLogout}>
+          退出登录
+        </Button>
+      ),
       children: (
         <History
           loading={getHistoryLoading}
@@ -103,6 +121,24 @@ export default () => {
 
   function onClickHistoryItem(id: number) {
     getHistoryRequest(id);
+  }
+
+  function onLogout(e: any) {
+    e?.stopPropagation();
+    localStorage.removeItem(STORAGE_ACCESS_TOKEN);
+    setIsLogin(false);
+    getHistoryListRequest();
+    message.success("退出登录成功");
+  }
+
+  function onLoginModal(e: any) {
+    e?.stopPropagation();
+    setLoginVisible(true);
+  }
+
+  function onLoginSuccess() {
+    setIsLogin(true);
+    getHistoryListRequest();
   }
 
   async function onGenerate() {
@@ -123,6 +159,7 @@ export default () => {
   }
 
   useEffect(() => {
+    setIsLogin(!!localStorage.getItem(STORAGE_ACCESS_TOKEN));
     getHistoryListRequest();
     initDefaultValue();
   }, []);
@@ -171,10 +208,15 @@ export default () => {
           </Button>
         ) : (
           <Button className={styles.button} type={"primary"} disabled>
-            生成中...
+            生成中，请耐心等候...
           </Button>
         )}
       </div>
+      <Login
+        visible={loginVisible}
+        changeVisible={setLoginVisible}
+        onSuccess={onLoginSuccess}
+      />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { isDev } from './utils';
 import { History } from './entities/history.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -40,6 +41,17 @@ import { History } from './entities/history.entity';
         }
       },
       inject: [ConfigService]
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      useFactory() {
+        return {
+          secret: 'careteen-gpt',
+          signOptions: {
+            expiresIn: '3d'
+          }
+        }
+      },
     }),
   ],
   controllers: [AppController],

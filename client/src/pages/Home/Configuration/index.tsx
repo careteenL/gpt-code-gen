@@ -1,7 +1,7 @@
 import { Form, FormProps, Input, Select } from "antd";
 // import styles from "./index.module.less";
 import { modelOptions } from "../../../utils";
-import React, { forwardRef, useContext, useImperativeHandle } from "react";
+import { forwardRef, useContext, useImperativeHandle } from "react";
 import {
   ConfigContext,
   ConfigContextState,
@@ -23,6 +23,7 @@ export interface ConfigurationRef {
 // eslint-disable-next-line react-refresh/only-export-components
 export default forwardRef<ConfigurationRef, ConfigurationProps>(
   (props, ref) => {
+    console.log("props: ", props);
     const { updateConfig } = useContext(ConfigContext);
     const [formInstance] = Form.useForm();
 

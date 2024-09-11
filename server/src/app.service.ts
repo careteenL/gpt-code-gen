@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { firstValueFrom } from 'rxjs';
 import { EntityManager } from 'typeorm';
@@ -37,39 +37,22 @@ export class AppService {
       newHistory.prompt = prompt
       newHistory.result = updatedCode
       await this.entityManager.save(History, newHistory)
-      return {
-        msg: '生成成功',
-        code: HttpStatus.OK,
-        data: updatedCode,
-      };
+      return updatedCode;
     } catch (error) {
-      return {
-        msg: '生成失败',
-        code: HttpStatus.BAD_GATEWAY,
-        data: error.message,
-      };
+      console.log('error: ', error);
+      throw new BadRequestException(error || '生成失败');
     }
   }
 
   async getHistoryList() {
-    const res = await this.entityManager.find(History);
-    return {
-      msg: 'ok',
-      code: HttpStatus.OK,
-      data: res,
-    }
+    return await this.entityManager.find(History);
   }
 
   async getHistory(id: number) {
-    const res = await this.entityManager.findOne(History, {
+    return await this.entityManager.findOne(History, {
       where: {
         id: +id,
       }
     })
-    return {
-      msg: 'ok',
-      code: HttpStatus.OK,
-      data: res,
-    }
   }
 }
