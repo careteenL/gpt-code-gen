@@ -19,6 +19,7 @@ function App() {
       const configValues = JSON.parse(
         localStorage.getItem(STORAGE_CONFIG) ?? ""
       );
+      console.log("configValues: ", configValues);
       setDefaultFormValues(configValues);
     } catch (error) {
       console.log("error: ", error);

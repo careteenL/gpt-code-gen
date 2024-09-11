@@ -1,5 +1,6 @@
 import { Avatar, List, ListProps } from "antd";
 import styles from "./index.module.less";
+import dayjs from "dayjs";
 
 export interface HistoryProps {
   loading: boolean;
@@ -34,7 +35,11 @@ export default (props: HistoryProps) => {
                   src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
                 />
               }
-              title={item?.createTime}
+              title={
+                item?.createTime
+                  ? dayjs(item?.createTime).format("YYYY-MM-DD HH:mm:ss")
+                  : "今天"
+              }
               description={item?.prompt}
             />
           </List.Item>
