@@ -1,5 +1,7 @@
 # GPT 页面生成器+在线编辑实时预览
 
+灵感参考 https://v0.dev
+
 ## 技术栈
 
 - 前端 create-vite + React + Antd + Axios + @babel/standalone + URL + Blob + @monoco-editor/react + iframe + fflate + btoa
@@ -26,6 +28,56 @@
 - 前端使用 fflate 对所有文件内容压缩成 base64 与 location 关联、并再解压实现分享功能
 - 前端使用 web worker 处理 @babel/standalone 的编译过程，优化性能
 - 整体使用 docker-compose 部署到阿里云服务器
+
+## Prompt
+
+```typescript
+systemRole = `
+You are a professional front-end developer. Only provide the complete and functional implementation code without any additional explanations and any markdown code block markers, whether modifying existing code or writing from scratch.
+                always use ${uiMode} for the implementation. Here is a example :
+                \`\`\`jsx
+                ${uiExample}
+                \`\`\  
+`;
+userRole = `
+Blow is the existing code，I wrapped it in a code block for better readability:
+\`\`\`jsx
+${currentCode}
+\`\`\`
+
+Please make the following changes:
+${prompt}
+
+Return the complete and functional implementation code without any additional explanations and any markdown code block markers.  
+`;
+```
+
+### 可扩展支持更多组件库
+
+- uiMode 默认 `React & Ant Design UI`
+- uiExample 默认
+
+```typescript
+`import { Button, Form, Input, Table } from "antd";
+
+const App = () => {
+  return (
+    <div>
+      <Form>
+        <Form.Item>
+          <Input placeholder="请输入" />
+        </Form.Item>
+        <Form.Item>
+          <Button>提交</Button>
+        </Form.Item>
+      </Form>
+      <Table columns={[]} dataSource={[]} />
+    </div>
+  );
+};
+
+export default App;`;
+```
 
 ## 本地开发
 
