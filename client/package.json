@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.4.0",
     "@babel/standalone": "^7.25.6",
     "@monaco-editor/react": "^4.6.0",
+    "@sentry/react": "^8.32.0",
     "@types/lodash-es": "^4.17.12",
     "@typescript/ata": "^0.9.7",
     "ahooks": "^3.8.1",
