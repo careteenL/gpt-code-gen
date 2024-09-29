@@ -115,3 +115,11 @@ npm run migration:run
 # API 8701
 # Mysql 8702
 ```
+
+在服务器删除数据
+
+```shell
+docker exec -it gpt-code-gen_gpt-mysql_1 /bin/sh
+mysql -u root -p
+DELETE FROM `gpt-code-gen`.`history` WHERE (`id` = '1');
+```
