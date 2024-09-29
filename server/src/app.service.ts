@@ -4,7 +4,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { firstValueFrom } from 'rxjs';
 import { EntityManager } from 'typeorm';
 import { History } from './entities/history.entity';
-import OpenAI from 'openai';
+// import OpenAI from 'openai';
 
 @Injectable()
 export class AppService {
@@ -20,26 +20,25 @@ export class AppService {
     prompt: string,
     requestData: any,
   ) {
-    const openai = new OpenAI({
-      apiKey,
-      baseURL: `${baseUrl}/v1`
-    })
+    // const openai = new OpenAI({
+    //   apiKey,
+    //   baseURL: `${baseUrl}/v1`
+    // })
     try {
       // 发送请求给 GPT
-      // const response = await firstValueFrom(
-      //   this.httpService.post(`${baseUrl}/v1/chat/completions`, requestData, {
-      //     headers: {
-      //       Authorization: `Bearer ${apiKey}`,
-      //     },
-      //   }),
-      // );
-      // console.log('response: ', response);
-      const response = await openai.chat.completions.create({
-        model: requestData.model,
-        messages: requestData.messages
-      })
+      const response = await firstValueFrom(
+        this.httpService.post(`${baseUrl}/v1/chat/completions`, requestData, {
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+          },
+        }),
+      );
+      // const response = await openai.chat.completions.create({
+      //   model: requestData.model,
+      //   messages: requestData.messages
+      // })
       console.log('response: ', response);
-      const updatedCode = response?.choices?.[0]?.message?.content
+      const updatedCode = response?.data?.choices?.[0]?.message?.content
         .replace(/```jsx|```/g, '')
         .trim();
 

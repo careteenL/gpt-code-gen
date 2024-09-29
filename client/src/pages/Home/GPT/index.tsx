@@ -7,7 +7,7 @@ import { ConfigContext } from "../../../context/ConfigContext";
 import { useRequest } from "ahooks";
 import { getHistory, getHistoryList, postGptGenerate } from "../../../services";
 import { PlaygroundContext } from "../../../context/PlaygroundContext";
-import { APP_TSX } from "../../../mock/files";
+import { APP_TSX, defaultHistory } from "../../../mock/files";
 import { STORAGE_ACCESS_TOKEN, STORAGE_CONFIG } from "../../../utils";
 import Login from "../Login";
 
@@ -52,7 +52,7 @@ export default () => {
           setInputValue("");
           message.info(DEFAULT_TIP);
         } else {
-          message.error("生成失败。请稍后重试");
+          message.error(data || "生成失败。请稍后重试");
         }
       },
       onError(e) {
@@ -82,9 +82,16 @@ export default () => {
 
   const historyDataSource = useMemo(() => {
     const { code, data } = historyData?.data || {};
+    const resList = [...defaultHistory];
     if (code === 200 || code === 201) {
-      return data;
+      return [...resList, ...data];
+    } else if (code === 401) {
+      message.error(data || "服务端出错，请稍后重试");
+      localStorage.removeItem(STORAGE_ACCESS_TOKEN);
+      setIsLogin(false);
+      return resList;
     }
+    return resList;
   }, [historyData]);
 
   const { apiKey, baseUrl, model, updateConfig } = useContext(ConfigContext);
@@ -120,6 +127,16 @@ export default () => {
   ];
 
   function onClickHistoryItem(id: number) {
+    if (id === defaultHistory[0].id) {
+      setFiles({
+        ...files,
+        [APP_TSX]: {
+          ...file,
+          value: defaultHistory[0].result,
+        },
+      });
+      return;
+    }
     getHistoryRequest(id);
   }
 

@@ -13,7 +13,7 @@ export interface HeaderProps {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default (props: HeaderProps) => {
-  const { name = "GPT" } = props;
+  const { name = "GPT 代码生成器" } = props;
 
   const { files } = useContext(PlaygroundContext);
 
@@ -29,6 +29,10 @@ export default (props: HeaderProps) => {
 
   function onLogo() {
     window.open("http://careteen.cn", "__blank");
+  }
+
+  function onGotoGithub() {
+    window.open("https://github.com/careteenL/gpt-code-gen/", "__blank");
   }
 
   return (
@@ -47,6 +51,11 @@ export default (props: HeaderProps) => {
           title="下载当前项目"
           className={styles.icon}
           onClick={onDownload}
+        />
+        <Icon.GithubOutlined
+          title="前往 github"
+          className={styles.icon}
+          onClick={onGotoGithub}
         />
       </div>
     </div>

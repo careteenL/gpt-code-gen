@@ -39,3 +39,15 @@ export const defaultFiles: PlaygroundFiles = {
     language: filename2Language(IMPORT_MAP_JSON)
   },
 }
+
+/**
+ * 默认的历史文件
+ */
+export const defaultHistory = [
+  {
+    createTime: "2024-06-29T08:06:29.886Z",
+    id: -1,
+    prompt: "Hello GPT",
+    result: AppTsxRaw
+  }
+]

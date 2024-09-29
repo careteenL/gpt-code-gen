@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SERVER_URL, STORAGE_ACCESS_TOKEN } from "../utils";
-import { message } from "antd";
+// import { message } from "antd";
 
 const axiosInstance = axios.create({
   baseURL: SERVER_URL,
@@ -22,8 +22,16 @@ axiosInstance.interceptors.response.use((response) => {
   if (!error.response) {
     return Promise.reject(error)
   }
+
   if (error.response?.data?.code === 401) {
-    message.info(`登录查看完整历史记录`)
+    // message.info(`登录查看完整历史记录`)
+    return {
+      data: {
+        code: error.response?.data?.code,
+        msg: error.response?.data?.msg,
+        data: error.response?.data?.data,
+      }
+    }
   }
   Promise.reject(error.response)
 })

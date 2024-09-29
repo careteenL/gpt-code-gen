@@ -21,49 +21,46 @@ export interface ConfigurationRef {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default forwardRef<ConfigurationRef, ConfigurationProps>(
-  (props, ref) => {
-    console.log("props: ", props);
-    const { updateConfig } = useContext(ConfigContext);
-    const [formInstance] = Form.useForm();
+export default forwardRef<ConfigurationRef, ConfigurationProps>((_, ref) => {
+  const { updateConfig } = useContext(ConfigContext);
+  const [formInstance] = Form.useForm();
 
-    const onValuesChange: FormProps["onValuesChange"] = (
-      values: Partial<ConfigurationFormItem>
-    ) => {
-      console.log("values: ", values);
-      updateConfig?.(values);
-    };
+  const onValuesChange: FormProps["onValuesChange"] = (
+    values: Partial<ConfigurationFormItem>
+  ) => {
+    console.log("values: ", values);
+    updateConfig?.(values);
+  };
 
-    function setFieldsValue(values: Partial<ConfigurationFormItem>) {
-      formInstance.setFieldsValue({
-        ...values,
-      });
-    }
-
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          setFieldsValue,
-        };
-      },
-      [ref]
-    );
-
-    return (
-      <div>
-        <Form form={formInstance} colon={false} onValuesChange={onValuesChange}>
-          <Form.Item name="apiKey">
-            <Input placeholder="请输入 apiKey" />
-          </Form.Item>
-          <Form.Item name="baseUrl">
-            <Input placeholder="请输入 baseUrl" />
-          </Form.Item>
-          <Form.Item name="model">
-            <Select options={modelOptions} placeholder="请选择 model" />
-          </Form.Item>
-        </Form>
-      </div>
-    );
+  function setFieldsValue(values: Partial<ConfigurationFormItem>) {
+    formInstance.setFieldsValue({
+      ...values,
+    });
   }
-);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        setFieldsValue,
+      };
+    },
+    [ref]
+  );
+
+  return (
+    <div>
+      <Form form={formInstance} colon={false} onValuesChange={onValuesChange}>
+        <Form.Item name="apiKey">
+          <Input placeholder="请输入 apiKey" />
+        </Form.Item>
+        <Form.Item name="baseUrl">
+          <Input placeholder="请输入 baseUrl" />
+        </Form.Item>
+        <Form.Item name="model">
+          <Select options={modelOptions} placeholder="请选择 model" />
+        </Form.Item>
+      </Form>
+    </div>
+  );
+});

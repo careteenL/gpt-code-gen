@@ -2,6 +2,7 @@ import { Form, Input, message, Modal, Spin } from "antd";
 import { postLogin, PostLoginParams } from "../../../services";
 import { useRequest } from "ahooks";
 import { STORAGE_ACCESS_TOKEN } from "../../../utils";
+import { useEffect } from "react";
 
 export interface LoginProps {
   visible: boolean;
@@ -40,6 +41,14 @@ export default (props: LoginProps) => {
     changeVisible(false);
     formInstance.resetFields();
   }
+
+  useEffect(() => {
+    formInstance.setFieldsValue({
+      username: "careteen",
+      password: "careteen",
+    });
+  }, []);
+
   return (
     <Modal
       title="登录"
