@@ -1,6 +1,6 @@
 # GPT 页面生成器+在线编辑实时预览
 
-灵感参考 https://v0.dev
+灵感参考 https://v0.dev https://bolt.new/
 
 ## 技术栈
 
@@ -12,6 +12,7 @@
 - 使用 ChatGPT 预置 prompt 结合用户输入需求生成前端代码
 - 支持类似于在 vscode IDE 中进行代码的增删改操作，并实时编译预览显示效果
 - 支持下载代码和分享链接
+- [类 chatgpt 流式传输效果](./fetch-stream/README.md)
 
 ![gpt-preview](https://careteenl.github.io/images/project/gpt/gpt-preview.png)
 
